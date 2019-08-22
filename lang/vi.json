@@ -1,0 +1,19 @@
+{
+  "index": {
+    "language": "Tiếng Việt",
+    "title": "Tạo ảnh ký tự",
+    "welcome": "Tạo ảnh kí tự thật đơn giản",
+    "btnVideo": "Tạo từ video",
+    "btnImage": "Tạo từ ảnh"
+  },
+  "image": {
+    "btnCreate": "Tạo",
+    "inputLabel": "Chọn hình ảnh",
+    "homePage": "Về trang chủ"
+  },
+  "video": {
+    "btnCreate": "Tạo",
+    "inputLabel": "Chọn video",
+    "homePage": "Về trang chủ"
+  }
+}

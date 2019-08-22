@@ -1,0 +1,19 @@
+{
+  "index": {
+    "language": "Language",
+    "title": "Make character image",
+    "welcome": "Make character image very simple",
+    "btnVideo": "Video to Character",
+    "btnImage": "Image to Character"
+  },
+  "image": {
+    "btnCreate": "Create",
+    "inputLabel": "Choose image",
+    "homePage": "Go to Home Page"
+  },
+  "video": {
+    "btnCreate": "Create",
+    "inputLabel": "Choose video",
+    "homePage": "Go to Home Page"
+  }
+}

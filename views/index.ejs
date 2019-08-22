@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- style -->
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/library/bootstrap/css/bootstrap.min.css" />
+    <!-- javascript -->
+    <script src="/library/bootstrap/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <form class="form-inline float-right">
+      <div class="row form-group">
+        <label class="col-form-label"><%= language %> &nbsp;</label>
+        <select class="custom-select-sm form-control" onchange="changeLanguage(event);">
+          <% for ( let key in languages ) { if (key == currentLanguage) { %>
+          <option selected value="/language/<%= key %>"><%= languages[key] %></option>
+          <% } else { %>
+          <option value="/language/<%= key %>"><%= languages[key] %></option>
+          <% }; }; %>
+        </select>
+      </div>
+    </form>
+    <h1><%= title %></h1>
+    <p><%= welcome %></p>
+    <a href="/image" role="button" class="btn btn-primary"><%= btnImage %></a>
+    <a href="/video" role="button" class="btn btn-primary"><%= btnVideo %></a>
+
+    <!-- scripts -->
+    <script>
+      function changeLanguage(e) {
+        window.location.pathname = e.target.value;
+      }
+    </script>
+  </body>
+</html>
