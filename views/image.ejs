@@ -1,58 +1,147 @@
 <!DOCTYPE html>
 <html>
-  <head lang="en">
-    <meta charset="UTF-8" />
-    <title>Char Picture</title>
-    <style>
-      #show {
-        font-family: Courier New;
-        font-size: 10px;
-        line-height: 8px;
-        margin-top: 10px;
-      }
-    </style>
-    <!-- style -->
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="stylesheet" href="/library/bootstrap/css/bootstrap.min.css" />
-    <!-- javascript -->
-    <script src="/library/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/javascripts/to-text.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <a href="/"><h1><%= homePage %></h1></a>
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="file" aria-describedby="addon1" />
-          <label class="custom-file-label" for="file"><%= inputLabel %></label>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>Char Picture</title>
+        <style>
+            #show {
+                font-family: Courier New;
+                font-size: 10px;
+                line-height: 8px;
+                margin-top: 10px;
+            }
+        </style>
+        <!-- style -->
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link
+            rel="stylesheet"
+            href="/library/bootstrap/css/bootstrap.min.css"
+        />
+        <!-- javascript -->
+        <script src="/library/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/javascripts/to-text.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <a href="/"><h1><%= homePage %></h1></a>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input
+                        type="file"
+                        class="custom-file-input"
+                        id="file"
+                        aria-describedby="addon1"
+                    />
+                    <label class="custom-file-label" for="file">
+                        <%= inputLabel %>
+                    </label>
+                </div>
+                <div class="input-group-prepend">
+                    <button
+                        class="btn btn-outline-primary"
+                        id="addon1"
+                        onclick="showImage()"
+                    >
+                        <%= btnCreate %>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 256px;">
+                <select
+                    class="form-control"
+                    onchange="onChangeQuality()"
+                    id="quality"
+                >
+                    <option value="100">100</option>
+                    <option value="75">75</option>
+                    <option value="50">50</option>
+                    <option value="25">25</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 256px;">
+                <select
+                    class="form-control"
+                    onchange="onChangeChars()"
+                    id="chars"
+                >
+                    <option value="symbol">Normal</option>
+                    <option value="facebook">Facebook</option>
+                </select>
+            </div>
+
+            <img src="" style="width: 100px;" />
+            <pre id="show"></pre>
         </div>
-        <div class="input-group-prepend">
-          <button class="btn btn-outline-primary" id="addon1" onclick="showImage()"><%= btnCreate %></button>
-        </div>
-      </div>
-      <img src="" style="width: 100px" />
-      <pre id="show"></pre>
-    </div>
-    <script>
-      var map = getCharsMap(),
-        show = document.getElementById("show"),
-        img = document.getElementsByTagName("img")[0],
-        canvas = document.createElement("canvas");
-      function showImage() {
-        var file = document.getElementById("file").files[0],
-          ctx = canvas.getContext("2d"),
-          url = URL.createObjectURL(file);
-        if (!file) {
-          alert("Vui lòng chọn tệp tin");
-        }
-        img.src = url;
-        img.onload = function() {
-          canvas.width = img.naturalWidth;
-          canvas.height = img.naturalHeight;
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          show.innerText = toChars(ctx, canvas.width, canvas.height, 100);
-        };
-      }
-    </script>
-  </body>
+        <script>
+            var map = getCharsMap(),
+                show = document.getElementById("show"),
+                img = document.getElementsByTagName("img")[0],
+                canvas = document.createElement("canvas");
+
+            function onChangeQuality() {
+                showImage();
+            }
+
+            function onChangeChars() {
+                const M = {
+                    symbol: [
+                        "@",
+                        "w",
+                        "#",
+                        "$",
+                        "k",
+                        "o",
+                        ">",
+                        "~",
+                        "-",
+                        "_",
+                        " ",
+                    ],
+                    facebook: [
+                        "⬛️",
+                        "⬛️",
+                        "◼️",
+                        "◼️",
+                        "◾️",
+                        "◾️",
+                        "▪️",
+                        "▪️",
+                        "▪️",
+                        "▫️",
+                    ],
+                };
+
+                const value = document.getElementById("chars").value;
+                map = getCharsMap(M[value]);
+                showImage();
+            }
+
+            function showImage() {
+                var file = document.getElementById("file").files[0],
+                    ctx = canvas.getContext("2d"),
+                    url = URL.createObjectURL(file);
+                if (!file) {
+                    alert("Vui lòng chọn tệp tin");
+                }
+                img.src = url;
+                const quality = Number(
+                    document.getElementById("quality").value
+                );
+                img.onload = function () {
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    show.innerText = toChars(
+                        ctx,
+                        canvas.width,
+                        canvas.height,
+                        Number(quality),
+                        map
+                    );
+                };
+            }
+        </script>
+    </body>
 </html>

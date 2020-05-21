@@ -2,13 +2,13 @@
  * Created by Ruanyu Jian
  */
 
-var map = getCharsMap();
 /* 
  * Chuyển hình ảnh thành text 
  
  */
 
-function toChars(context, width, height, rowChars) {
+function toChars(context, width, height, rowChars, map) {
+    map = map || getCharsMap();
     var pixels = [],
         output = "",
         imageData = context.getImageData(0, 0, width, height),
@@ -48,12 +48,12 @@ function toChars(context, width, height, rowChars) {
     }
     return output;
 }
-function getCharsMap() {
-    var chars = ["@", "w", "#", "$", "k", "d", "t", "j", "i", ".", " "];
+function getCharsMap(chars) {
+    chars = chars || ["@", "w", "#", "$", "k", "o", ">", "~", "-", "_", " "];
     var step = 25,
         map = {};
     for (var i = 0; i < 256; i++) {
-        var index = ~~(i / 25);
+        var index = ~~(i / step);
         map[i] = chars[index];
     }
     return map;
